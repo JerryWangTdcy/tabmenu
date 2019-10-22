@@ -70,7 +70,6 @@ axios.interceptors.response.use(
 function apiAxios(method,url,params){
     let httpDeafult = {
         method: method,
-        baseURL: baseURL,
         url: url,
         // `params` 是即将与请求一起发送的 URL 参数
         // `data` 是作为请求主体被发送的数据
