@@ -1,9 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 const state = {
-  token: 'abc123'
+  token: 'abc123',
+  activeTabName: 'home',
+  tabList: [
+    {
+      label: ''
+    }
+  ]
 }
 
 const store = new Vuex.Store({
