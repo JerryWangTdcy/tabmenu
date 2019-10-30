@@ -1,49 +1,72 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li>
-        <a href="https://vuejs.org" target="_blank">Core Docs</a>
-      </li>
-      <li>
-        <a href="https://forum.vuejs.org" target="_blank">Forum</a>
-      </li>
-      <li>
-        <a href="https://chat.vuejs.org" target="_blank">Community Chat</a>
-      </li>
-      <li>
-        <a href="https://twitter.com/vuejs" target="_blank">Twitter</a>
-      </li>
-      <br />
-      <li>
-        <a href="http://vuejs-templates.github.io/webpack/" target="_blank">Docs for This Template</a>
-      </li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li>
-        <a href="http://router.vuejs.org/" target="_blank">vue-router</a>
-      </li>
-      <li>
-        <a href="http://vuex.vuejs.org/" target="_blank">vuex</a>
-      </li>
-      <li>
-        <a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a>
-      </li>
-      <li>
-        <a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a>
-      </li>
-    </ul>
+  <div class="login-container">
+    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" label-position="left">
+      
+      <div class="title-container">
+        <h3 class="title">系统登录</h3>
+      </div>
+      <span class="svg-container">
+        <svg-svg icon-class="password" />
+      </span>
+      <el-form-item prop="username">
+        <el-input 
+        ref="username"
+        name="username"
+        v-model="loginForm.username" 
+        placeholder="用户名称" 
+        type="text" 
+        tabindex="1" 
+        autoComplete="on"
+        >
+        <!-- <i slot="prefix" class="el-input__icon el-icon-search"></i> -->
+        </el-input>
+      </el-form-item>
+
+      <el-form-item prop="password">
+        <el-input
+        ref="password"
+        name="password"
+        prefix-icon="el-icon-lock"
+        v-model="loginForm.password" 
+        placeholder="密码" 
+        type="text" 
+        tabindex="1" 
+        autoComplete="on"
+        >  
+        <i slot="suffix" class="el-input__icon el-icon-search"></i>
+        </el-input>  
+      </el-form-item>  
+    </el-form>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'Login',
   data () {
+    const validateUsername = (rule, value, callback) => {
+      if (!validUsername(value)) {
+        callback(new Error('Please enter the correct user name'))
+      } else {
+        callback()
+      }
+    }
+    const validatePassword = (rule, value, callback) => {
+      if (value.length < 6) {
+        callback(new Error('The password can not be less than 6 digits'))
+      } else {
+        callback()
+      }
+    }
     return {
-      msg: 'Welcome to Your Vue.js App'
+      loginForm: {
+        username: 'admin',
+        password: '123456'
+      },
+      loginRules: {
+        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+      }
     }
   },
   created () {
@@ -52,21 +75,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1,
-h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+
 </style>
