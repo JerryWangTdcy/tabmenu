@@ -3,13 +3,28 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
+const state = {
+  token: 'abc123',
+  activeTabName: 'home',
+  tabList: [
+    {
+      label: ''
+    }
+  ]
+}
+
+const store = new Vuex.Store({
+  state
 })
+
+export default store
+// export default new Vuex.Store({
+//   state: {
+//   },
+//   mutations: {
+//   },
+//   actions: {
+//   },
+//   modules: {
+//   }
+// })

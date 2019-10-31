@@ -22,8 +22,8 @@ axios.interceptors.request.use(
     config => {
         // 每次发送请求之前判断是否存在token，如果存在，则统一在http请求的header都加上token，不用每次请求都手动添加了
         // 即使本地存在token，也有可能token是过期的，所以在响应拦截器中要对返回状态进行判断
-        const token = store.state.token
-        token && (config.headers.Authorization = token);
+        //const token = store.state.token
+        //token && (config.headers.Authorization = token);
         return config;
     },
     error => {
@@ -33,7 +33,7 @@ axios.interceptors.request.use(
 
 // 响应拦截器
 axios.interceptors.response.use(
-    response => {
+    response => {    
         if (response.status === 200) {
             return Promise.resolve(response);
         } else {
@@ -60,7 +60,28 @@ axios.interceptors.response.use(
         }
     }
 );
+//封装数据返回失败提示函数
+function errorState(response){
+    //隐藏loading
+    //如果http状态码正常，则直接返回数据
+    if(response && (response.status === 200 || response.status === 304 || response.status === 400)){
+        // 如果不需要除了data之外的数据，可以直接 return response.data
+        return response
+    } else {
+        console.log('数据获取错误')
+    }
+}
 
+//封装数据返回成功提示函数 
+function successState(res){
+    // 隐藏loading
+    // 统一判断后端返回的错误码(错误码与后台协商而定)
+    // if (res.data.code === '000000') {
+    //     alert('success')
+    //     return res
+    // }
+    return res
+}
 /**
  * 构造函数
  * 封装请求
