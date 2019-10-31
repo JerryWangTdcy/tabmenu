@@ -6,7 +6,7 @@
         <h3 class="title">系统登录</h3>
       </div>
       <span class="svg-container">
-        <svg-svg icon-class="password" />
+        <svg-icon icon-class="user" />
       </span>
       <el-form-item prop="username">
         <el-input 
@@ -76,5 +76,11 @@ export default {
 </script>
 
 <style scoped>
-
+.svg-container {
+    padding: 6px 5px 6px 15px;
+    color: gray;
+    vertical-align: middle;
+    width: 30px;
+    display: inline-block;
+}
 </style>

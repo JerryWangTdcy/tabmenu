@@ -1,62 +1,27 @@
 import Vue from 'vue'
-import Router from 'vue-router'
+import VueRouter from 'vue-router'
+import Home from '../views/Home.vue'
 
-Vue.use(Router)
+Vue.use(VueRouter)
 
-/* Layout */
-import Layout from '@/Layout'
-
-/* Router Modules */ 
-
-/**
- * 基础路由
- * 不需要访问权限路由 
- */
-export const constantRoutes = [
-  {
-    //重定向
-    path: '/redirect',
-    component: Layout,
-    hidden: true,
-    children: [
-      {
-        path: '/redirect/:path*',
-        component: () => import('@/views/redirect/index')
-      }
-    ]
-  },
+const routes = [
   {
     path: '/',
-    hidden: true,
-    redirect: '/login'
+    name: 'home',
+    component: Home
   },
   {
-    path: '/login',
-    component: () => import('@/views/login/index'),
-    hidden: true
+    path: '/about',
+    name: 'about',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   }
 ]
 
-/* 
-* 动态加载路由
-* 需要根据角色权限显示的路由
-*/ 
-export const asyncRoutes = [
-
-  { path: '*', redirect: '/404', hidden: true }
-]
-
-const createRouter = () => new Router({
-  // mode: 'history', //启动history模式需要后台服务端支持
-  scrollBehavior: () => ({ y:0 }),
-  routes: constantRoutes
+const router = new VueRouter({
+  routes
 })
-
-const router = createRouter()
-
-export function resetRouter() {
-  const newRouter = createRouter()
-  router.matcher = newRouter.matcher // reset router
-}
 
 export default router
