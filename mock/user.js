@@ -1,37 +1,84 @@
-// const tokens = {
 
-// }
-// export default [
-//   // user login
-//   {
-//     url: '/user/login',
-//     type: 'post',
-//     response: config => {
-//       const { username } = config.body
-//       const token = tokens[username]
+const tokens = {
+  admin: {
+    token: 'admin-token'
+  },
+  editor: {
+    token: 'editor-token'
+  }
+}
 
-//       // mock error
-//       if (!token) {
-//         return {
-//           code: 60204,
-//           message: '帐户或密码不正确。'
-//         }
-//       }
+const users = {
+  'admin-token': {
+    roles: ['admin'],
+    introduction: 'I am a super administrator',
+    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+    name: 'Super Admin'
+  },
+  'editor-token': {
+    roles: ['editor'],
+    introduction: 'I am an editor',
+    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+    name: 'Normal Editor'
+  }
+}
 
-//       return {
-//         code: 20000,
-//         data: token
-//       }
-//     }
-//   }
-// ]
-const page1 = [
+export default [
+  // user login
   {
-    code: 200,
-    data: ['中学时暗恋班花，被同班的女汉子知道了，连忙请她保密，本以为向来爽朗不羁的她是不屑告密的，结果丫飞快的把我出卖了。 后来想想，也可能是我拜托她的方式不对，不该说什么这是男人之间的约定。']
+    url: '/user/login',
+    type: 'post',
+    response: config => {
+      const { username } = config.body
+      const token = tokens[username]
+
+      // mock error
+      if (!token) {
+        return {
+          code: 60204,
+          message: 'Account and password are incorrect.'
+        }
+      }
+
+      return {
+        code: 20000,
+        data: token
+      }
+    }
+  },
+
+  // get user info
+  {
+    url: '/user/info\.*',
+    type: 'get',
+    response: config => {
+      const { token } = config.query
+      const info = users[token]
+
+      // mock error
+      if (!info) {
+        return {
+          code: 50008,
+          message: 'Login failed, unable to get user details.'
+        }
+      }
+
+      return {
+        code: 20000,
+        data: info
+      }
+    }
+  },
+
+  // user logout
+  {
+    url: '/user/logout',
+    type: 'post',
+    response: _ => {
+      return {
+        code: 20000,
+        data: 'success'
+      }
+    }
   }
 ]
-const res = {
-  page1
-}
-export default res

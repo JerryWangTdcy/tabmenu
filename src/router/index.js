@@ -26,6 +26,11 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/login',
+    component: () => import('@/views/login/index'),
+    hidden: true
+  },
+  {
     path: '/',
     component: Layout,
     redirect: '/dashboard',
@@ -39,9 +44,28 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/login',
-    component: () => import('@/views/login/index'),
-    hidden: true
+    path: '/menu',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/menu/index'),
+        name: 'menu',
+        meta: { title: 'menu',icon: 'documentation', affix: true}
+      }
+    ]
+  },
+  {
+    path: '/list',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/list/index'),
+        name: 'list',
+        meta: { title: 'list',icon: 'guide', affix: true}
+      }
+    ]
   }
 ]
 

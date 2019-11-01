@@ -20,15 +20,18 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import SidebarItem from './SidebarItem'
 export default {
-  components: {
-
-  },
+  components: { SidebarItem },
   computed: {
+    ...mapGetters([
+      'permission_routes',
+      'sidebar'
+    ]),
     activeMenu() {
       const route = this.$route
       const { meta, path }  = route
-      console.log(route)
       if (meta.activeMenu) {
         return meta.activeMenu
       }
@@ -38,6 +41,5 @@ export default {
       return !this.sidebar.opened
     }
   }
-
 }
 </script>
